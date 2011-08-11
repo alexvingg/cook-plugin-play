@@ -1,0 +1,18 @@
+		$("${_obj}").dialog({
+		    autoOpen: false,
+		    width: ${_width},
+		    modal: true,
+		    buttons: {
+		        "OK": function() {
+		            $(this).dialog("close");
+		            var action = $(this).dialog('option','action_obj');
+		            location.href = action;
+		        }
+		        ,
+		        "Cancelar": function() {
+		            $(this).dialog("close");
+		        }
+		    }
+		});
+
+

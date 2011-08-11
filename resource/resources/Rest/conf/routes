@@ -1,0 +1,30 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                       Application.index
+
+# Rotas Padrão
+GET     /{controller}                           {controller}.index
+GET     /{controller}/view/{id}                 {controller}.view
+GET     /{controller}/form/{id}                 {controller}.form
+GET     /{controller}/delete/{id}               {controller}.delete
+POST    /{controller}/save/{id}                 {controller}.save
+
+# Rotas Rest-Padrão
+POST    /ws/login                                  RestDefaultController.login
+GET     /ws/logout                                 RestDefaultController.logout
+GET     /ws/{controller}                           {controller}.list
+POST    /ws/{controller}                           {controller}.save
+GET     /ws/{controller}/{id}                      {controller}.view
+DELETE  /ws/{controller}/{id}                      {controller}.delete
+POST    /ws/{controller}/{id}                      {controller}.save
+PUT     /ws/{controller}/{id}                      {controller}.save
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}
+*       /{controller}/{action}/{id}             {controller}.{action}
