@@ -1,1 +1,21 @@
-<button #{if _id}id="${_id}"#{/if} #{if _class}class="${_class}"#{/if} #{if _onclick}type="button" onclick="${_onclick}"#{/if} #{if _href}type="button" onclick="location.href='${_href}#{if _param}${_param}#{/if}'"#{/if} #{if _type.equals("submit")}type="submit"#{/if}>${_label}</button>
+<button 
+	#{if _id}
+		id="${_id}"
+	#{/if} 
+	#{if _class}
+		class="${_class}"
+	#{/if} 
+	#{if _onclick}
+		type="button" onclick="${_onclick}"
+	#{/if} 
+	#{if _confirm} 
+		type="button" onclick="confirm_method(${_confirm}, '${_href}' );" 
+	#{/if}
+	#{else} 
+	#{if _href}
+		type="button" onclick="location.href='${_href}#{if _param}${_param}#{/if}'"
+	#{/if} 
+	#{/else}" 
+		#{if _type.equals("submit")}type="submit"
+	#{/if}>${_label}
+</button>
