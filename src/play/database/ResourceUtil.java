@@ -181,11 +181,16 @@ public class ResourceUtil
 
             if (this.bundle.getProperty("db") != null && this.bundle.getProperty("db").substring(0, 5).toLowerCase().equals("mysql")) {
                 String[] valores = this.bundle.getProperty("db").split(":");
-                String senha[] = valores[2].split("@");
+                String usuario = valores[1].substring(2, valores[1].length());
+                String valores_novo[] = valores[2].split("@");
+                String senha = valores_novo[0];
+                String valores_novo2[] = valores_novo[1].split("/");
+                String url = valores_novo2[0];
+                String banco = valores_novo2[1];
                 this.setJdbcDriver("com.mysql.jdbc.Driver");
-                this.setJdbcUrl("jdbc:mysql://localhost:3306/" + senha[1]);
-                this.setJdbcUser(valores[1]);
-                this.setJdbcPass(senha[0]);
+                this.setJdbcUrl("jdbc:mysql://"+url+":3306/" + banco);
+                this.setJdbcUser(usuario);
+                this.setJdbcPass(senha);               
                 return true;
             }
         }
