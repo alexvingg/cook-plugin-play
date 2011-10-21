@@ -76,6 +76,9 @@
         <copy todir="temp/play">  
             <fileset dir="resource"></fileset>  
         </copy>
+
+
+
         <mkdir dir="resource"/> 
         <mkdir dir="bin"/> 
         <zip basedir="temp" zipfile="bin/play.zip" />

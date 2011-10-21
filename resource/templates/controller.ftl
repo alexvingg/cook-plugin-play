@@ -4,12 +4,12 @@ import java.util.List;
 import models.${inflector.singularize("${class}")};
 <#list atributosRelacao as at>
 import models.${at.getTipo()};
-</#list>  
+</#list>
 
 public class ${controlador} extends DefaultController {
     
     public static void index(){
-        List<${inflector.singularize("${class}")}> ${class?lower_case} = ${inflector.singularize("${class}")}.findAll();			
+        List<${inflector.singularize("${class}")}> ${class?lower_case} = ${inflector.singularize("${class}")}.findAll();
         render(${class?lower_case});
     }
 
@@ -26,7 +26,7 @@ public class ${controlador} extends DefaultController {
         }else{
             flash.error("É necessário informar um ${inflector.singularize("${class}")?lower_case}.");
             index();
-        }       
+        }
     }
 
 
@@ -45,15 +45,15 @@ public class ${controlador} extends DefaultController {
    public static void form(Long id) {
 
      <#list atributosRelacao as at>
-	<#if at.getAnnotation() = "ManyToMany">
-      	List<${at.getTipo()}> ${at.getNome()?lower_case} = ${at.getTipo()}.findAll();
-	</#if>
-	<#if at.getAnnotation() = "ManyToOne">
-	List<${at.getTipo()}> ${inflector.pluralize("${at.getNome()}")?lower_case} = ${at.getTipo()}.findAll();
-	</#if>
-     </#list>  
+<#if at.getAnnotation() = "ManyToMany">
+       List<${at.getTipo()}> ${at.getNome()?lower_case} = ${at.getTipo()}.findAll();
+</#if>
+<#if at.getAnnotation() = "ManyToOne">
+List<${at.getTipo()}> ${inflector.pluralize("${at.getNome()}")?lower_case} = ${at.getTipo()}.findAll();
+</#if>
+     </#list>
       if(id != null) {
-          ${inflector.singularize("${class}")} ${inflector.singularize("${class}")?lower_case}  = ${inflector.singularize("${class}")}.findById(id);
+          ${inflector.singularize("${class}")} ${inflector.singularize("${class}")?lower_case} = ${inflector.singularize("${class}")}.findById(id);
           if (${inflector.singularize("${class}")?lower_case} != null) {
               render(${inflector.singularize("${class}")?lower_case}<#list atributosRelacao as at>,<#if at.getAnnotation() = "ManyToMany">${at.getNome()?lower_case}</#if><#if at.getAnnotation() = "ManyToOne">${inflector.pluralize("${at.getNome()}")?lower_case}</#if></#list>);
           } else {
@@ -62,7 +62,7 @@ public class ${controlador} extends DefaultController {
           }
       }else{
           render(<#list atributosRelacao as at><#if at.getAnnotation() = "ManyToMany">${at.getNome()?lower_case}</#if><#if at.getAnnotation() = "ManyToOne">${inflector.pluralize("${at.getNome()}")?lower_case}</#if><#if at_has_next>,</#if></#list>);
-      }   
+      }
   }
   
   public static void save(Long id, ${inflector.singularize("${class}")} ${inflector.singularize("${class}")?lower_case}VO){
@@ -73,10 +73,10 @@ public class ${controlador} extends DefaultController {
           ${inflector.singularize("${class}")?lower_case}VO = null;
       }else{
           ${inflector.singularize("${class}")?lower_case} = ${inflector.singularize("${class}")}.findById(id);
-          if(${inflector.singularize("${class}")?lower_case} != null){          
+          if(${inflector.singularize("${class}")?lower_case} != null){
           <#list atributos as atr>
-	      ${inflector.singularize("${class}")?lower_case}.${atr.getNome()}  = ${inflector.singularize("${class}")?lower_case}VO.${atr.getNome()};
-          </#list>  
+	  ${inflector.singularize("${class}")?lower_case}.${atr.getNome()} = ${inflector.singularize("${class}")?lower_case}VO.${atr.getNome()};
+          </#list>
           }else{
               flash.error("Registro não encontrado.");
               index();
@@ -84,7 +84,15 @@ public class ${controlador} extends DefaultController {
       }
       validation.valid(${inflector.singularize("${class}")?lower_case});
       if (validation.hasErrors()) {
-           render("@form", ${inflector.singularize("${class}")?lower_case});
+	     <#list atributosRelacao as at>
+	<#if at.getAnnotation() = "ManyToMany">
+	       List<${at.getTipo()}> ${at.getNome()?lower_case} = ${at.getTipo()}.findAll();
+	</#if>
+	<#if at.getAnnotation() = "ManyToOne">
+		List<${at.getTipo()}> ${inflector.pluralize("${at.getNome()}")?lower_case} = ${at.getTipo()}.findAll();
+	</#if>
+	     </#list>
+          render("@form", ${inflector.singularize("${class}")?lower_case} <#list atributosRelacao as at> <#if at_index == 0>, </#if> <#if at.getAnnotation() = "ManyToMany">${at.getNome()?lower_case}</#if>  <#if at.getAnnotation() = "ManyToOne">${inflector.pluralize("${at.getNome()}")?lower_case}</#if><#if at_has_next>,</#if></#list>);
       }
       ${inflector.singularize("${class}")?lower_case}.save();
       flash.success("Registro salvo com sucesso.");

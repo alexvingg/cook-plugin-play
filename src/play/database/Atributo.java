@@ -4,6 +4,7 @@
  */
 package play.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
 public class Atributo
 {
 
-    private List<String> annotation;
+    private List<String> annotation = new ArrayList<String>();
     private String type;
     private String field;
     private boolean pk = false;
@@ -120,25 +121,41 @@ public class Atributo
     
     /**
      * Metodo que recebe o tipo atributo do banco e converte para um tipo em java
-     * @param typeBd Tipo do atributo dobanco (Mysql ou Postgres)
+     * @param typeBd Tipo do atributo dobanco (Mysql, Postgress, SqlServer)
      * @return Tipo do atributo em java
      */
     public String getTypeJava(String typeBd)
     {
-        if (typeBd.toLowerCase().equals("bool") || typeBd.toLowerCase().equals("tinyint") || typeBd.toLowerCase().equals("bit")) {
+        if (typeBd.toLowerCase().equals("bool") || 
+                typeBd.toLowerCase().equals("tinyint") || 
+                typeBd.toLowerCase().equals("bit")) {
             return "Boolean";
         } else if (typeBd.toLowerCase().equals("bigint")) {
             return "BigInteger";
-        } else if (typeBd.toLowerCase().equals("serial")) {
+        } else if (typeBd.toLowerCase().equals("serial") || 
+                typeBd.toLowerCase().equals("numeric")) {
             return "Integer";
-        } else if (typeBd.toLowerCase().equals("varchar") || typeBd.toLowerCase().equals("text") || typeBd.toLowerCase().equals("bpchar")) {
+        } else if (typeBd.toLowerCase().equals("varchar") || 
+                typeBd.toLowerCase().equals("text") || 
+                typeBd.toLowerCase().equals("bpchar") ||
+                typeBd.toLowerCase().equals("nchar")) {
             return "String";
-        } else if (typeBd.toLowerCase().equals("numeric") || typeBd.toLowerCase().equals("float") || typeBd.toLowerCase().equals("decimal")) {
+        } else if (typeBd.toLowerCase().equals("numeric") || 
+                typeBd.toLowerCase().equals("float") || 
+                typeBd.toLowerCase().equals("decimal") ||
+                typeBd.toLowerCase().equals("money") ||
+                typeBd.toLowerCase().equals("real")) {
             return "Double";
-        } else if (typeBd.toLowerCase().equals("datetime") || typeBd.toLowerCase().equals("date") || typeBd.toLowerCase().equals("timestamp")) {
+        } else if (typeBd.toLowerCase().equals("datetime") || 
+                typeBd.toLowerCase().equals("date") || 
+                typeBd.toLowerCase().equals("timestamp") ||
+                typeBd.toLowerCase().equals("smalldatetime")) {
             return "Date";
         } else if (typeBd.toLowerCase().substring(0, 3).equals("int")) {
             return "Integer";
+        } else if(typeBd.toLowerCase().equals("smallint") ||
+                typeBd.toLowerCase().equals("tinyint")){
+            return "int";
         }
         return typeBd;
     }

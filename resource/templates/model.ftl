@@ -3,6 +3,7 @@ package models;
 import java.util.*;
 import java.math.*;
 import javax.persistence.*;
+import play.data.validation.*;
 import play.db.jpa.Model;
 
 @Entity(name="${tabela}")

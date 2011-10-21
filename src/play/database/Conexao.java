@@ -19,6 +19,7 @@ public class Conexao
 
     public final static int POSTGRES = 1;
     public final static int MYSQL = 2;
+    public final static int SQL = 3;
     private int type;
     private String url;
     private String driver;
@@ -42,6 +43,8 @@ public class Conexao
                 this.type = 1;
             } else if (this.driver.equals("com.mysql.jdbc.Driver")) {
                 this.type = 2;
+            }else if(this.driver.equals("net.sourceforge.jtds.jdbc.Driver")){
+                this.type = 3;
             }
         } catch (Exception e) {
         }
@@ -53,6 +56,8 @@ public class Conexao
             driver = "org.postgresql.Driver";
         } else if (type == MYSQL) {
             driver = "com.mysql.jdbc.Driver";
+        } else if(type == SQL){
+            driver = "net.sourceforge.jtds.jdbc.Driver";
         }
         if(driver == null)
         {
@@ -89,6 +94,8 @@ public class Conexao
         if (type == POSTGRES) {
             return url;
         } else if (type == MYSQL) {
+            return url;
+        } else if(type == SQL){
             return url;
         }
         return null;

@@ -64,6 +64,7 @@ public class CriaModel
             while (rs.next()) {
                 contadorAtributos++;
             }
+            
             rs = null;
             rs = metadata.getImportedKeys(getConexao().getConnection().getCatalog(), null, nomeTabela);
             while (rs.next()) {
@@ -299,7 +300,7 @@ public class CriaModel
                                 }
                             }
 
-                            rstt.close();
+                            rstt.close();   
                             this.verificaExisteModel(caminhoModel + "/", corrigeNome(Inflector.getInstance().singularize(campo_tabela)) + ".java");
                             anotacoes.add("@ManyToMany()");
                             anotacoes.add("@JoinTable(name=\"" + rs.getString("FKTABLE_NAME") + "\", joinColumns={@JoinColumn"
@@ -371,8 +372,23 @@ public class CriaModel
                 Atributo a = new Atributo();
                 a.setField(rs.getString(4));
                 a.setType(rs.getString("TYPE_NAME"));
+                
+                if(rs.getString(11).equals("0")){
+                    a.getAnnotation().add("@Required(message=\"* obrigatório.\")");
+                }
+                
+                if(a.getType().equals("Integer") || 
+                        a.getType().equals("String") || 
+                        a.getType().equals("int") || 
+                        a.getType().equals("Double") ||
+                        a.getType().equals("BigInteger")){
+                    a.getAnnotation().add("@MaxSize(message = \"* tamanho máximo %2$s caracteres.\",value="+rs.getString(7)+")");
+                }
+                
+                
                 has_atributos.put(rs.getString(4), a);
             }
+                       
             PrintUtil.outn("");
             int opcao_display = PrintUtil.inInt("Digite a opcao: ");
             PrintUtil.outn("");
