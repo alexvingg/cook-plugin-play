@@ -1,7 +1,10 @@
+jQuery.fn.exists = function(){return jQuery(this).length>0;}
+if ($(".datepicker").exists()) {
 $(".datepicker").datepicker({
-    dateFormat: 'dd/mm/yy',
-    minDate: new Date(2000,01,01),
-    dayNamesMin: ['Do', 'Se', 'Te', 'Qu', 'Qi', 'Se', 'Sa'],
-    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-    showAnim:"show"
+dateFormat: 'dd/mm/yy',
+minDate: new Date(2000,01,01),
+dayNamesMin: ['Do', 'Se', 'Te', 'Qu', 'Qi', 'Se', 'Sa'],
+monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+showAnim:"show"
 });
+}
